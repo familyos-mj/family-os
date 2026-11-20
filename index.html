@@ -1,152 +1,110 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#172b46">
-<title>Family OS — La casa, in armonia</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#24445f">
+<title>Family OS — Demo interattiva</title>
 <style>
-:root{
- --blue:#8faebe;--navy:#172b46;--cream:#f5f0e6;--beige:#d8c9b5;
- --ink:#26364a;--muted:#718092;--white:#fff;--line:#e7e2d9;
- --shadow:0 10px 30px rgba(23,43,70,.08);--radius:20px
-}
-*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-button,input,textarea,select{font:inherit}button{cursor:pointer}
-.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
-.sidebar{background:var(--navy);color:white;padding:26px 17px;display:flex;flex-direction:column;gap:25px}
-.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 18px;border-bottom:1px solid #ffffff25}
-.logo{width:44px;height:44px;border-radius:15px;background:var(--blue);display:grid;place-items:center;font-size:24px}
-.brand strong{font-size:20px;letter-spacing:.2px}.brand small{display:block;color:#c4d0dc;font-size:11px;margin-top:3px}
-.nav-label{color:#aebdca;text-transform:uppercase;letter-spacing:1.4px;font-size:10px;padding:0 10px}
-nav{display:grid;gap:5px}
-.nav-btn{border:0;background:transparent;color:#dce4eb;text-align:left;padding:11px 12px;border-radius:12px;display:flex;gap:12px;align-items:center;font-size:13px}
-.nav-btn:hover,.nav-btn.active{background:#ffffff18;color:white}.nav-btn.active{box-shadow:inset 3px 0 var(--blue)}
-.nav-icon{width:20px;text-align:center;font-size:16px}
-.side-note{margin-top:auto;background:#ffffff12;border:1px solid #ffffff20;border-radius:16px;padding:14px;font-size:12px;line-height:1.5;color:#dce4eb}
-main{min-width:0;padding:30px clamp(18px,4vw,48px) 90px;max-width:1500px;width:100%;margin:auto}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:27px}
-.eyebrow{color:#718092;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}
-h1{font-size:clamp(25px,3vw,34px);margin:7px 0 4px;color:var(--navy);letter-spacing:-.8px}
-.subtitle{color:var(--muted);font-size:14px}
-.date-pill{background:white;border:1px solid var(--line);padding:10px 14px;border-radius:30px;color:var(--navy);font-size:12px;white-space:nowrap}
-.panel{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:18px}
-.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-h2{font-size:17px;color:var(--navy);margin:0}h3{font-size:14px;color:var(--navy);margin:0 0 8px}
-p{line-height:1.55}.muted{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-.stat{padding:18px;background:white;border:1px solid var(--line);border-radius:18px}
-.stat-icon{font-size:21px}.stat strong{display:block;font-size:25px;color:var(--navy);margin:9px 0 2px}.stat span{font-size:12px;color:var(--muted)}
-.module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.module-card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;text-align:left;color:var(--ink);transition:.2s;min-height:130px}
-.module-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--blue)}
-.module-card .emoji{font-size:24px;display:block;margin-bottom:12px}.module-card strong{display:block;color:var(--navy);font-size:14px}.module-card small{display:block;color:var(--muted);font-size:11px;line-height:1.4;margin-top:5px}
-.btn{border:0;background:var(--navy);color:white;padding:10px 15px;border-radius:12px;font-size:12px;font-weight:650}
-.btn:hover{background:#294765}.btn.secondary{background:#eaf0f3;color:var(--navy)}.btn.cream{background:var(--cream);color:var(--navy);border:1px solid var(--line)}
-.btn.small{padding:7px 10px;font-size:11px}
-.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}
-.list{display:grid;gap:9px}.item{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--line);border-radius:13px}
-.item input[type=checkbox]{accent-color:var(--navy);width:17px;height:17px;margin-top:2px}
-.item .item-text{flex:1;font-size:13px}.item.done .item-text{text-decoration:line-through;color:#9aa4ae}
-.tag{display:inline-block;background:#edf2f4;color:#496276;padding:4px 8px;border-radius:20px;font-size:10px}
-.empty{padding:25px;text-align:center;color:var(--muted);font-size:13px;background:#faf9f6;border-radius:14px}
-.form-row{display:flex;gap:8px;margin:12px 0}.form-row input,.form-row select,.form-row textarea,.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;color:var(--ink);outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--blue)!important;box-shadow:0 0 0 3px #8faebe22}
-.form-row input{min-width:0}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:11px;color:var(--muted);font-weight:650}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.recipe{border:1px solid var(--line);border-radius:14px;padding:14px}.recipe p{font-size:12px;color:var(--muted);margin:7px 0}
-.progress{height:7px;background:#edf0f1;border-radius:20px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;background:var(--blue);border-radius:20px}
-.bottom-nav{display:none}
-footer{text-align:center;color:#9aa4ae;font-size:10px;padding:25px}
-@media(max-width:900px){.app{grid-template-columns:210px 1fr}.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:650px){
- .app{display:block}.sidebar{display:none}main{padding:20px 15px 95px}.topbar{align-items:flex-start}.date-pill{font-size:10px;padding:8px}
- .module-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.module-card{padding:14px;min-height:122px}
- .grid{gap:9px}.stat{padding:13px}.stat strong{font-size:21px}
- .panel{padding:16px;margin-bottom:13px}.two-col{grid-template-columns:1fr}
- .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:8px 5px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;z-index:5;box-shadow:0 -5px 20px #172b4610}
- .bottom-nav button{border:0;background:transparent;color:#718092;font-size:9px;display:grid;justify-items:center;gap:3px;padding:4px}
- .bottom-nav button b{font-size:18px;font-weight:400}.bottom-nav button.active{color:var(--navy);font-weight:700}
- .form-row{flex-wrap:wrap}.form-row .btn{white-space:nowrap}
-}
+:root{--navy:#203e59;--blue:#8fb6cc;--blue2:#dceaf1;--cream:#faf7ef;--beige:#eee7d9;--ink:#243746;--muted:#71808a;--white:#fff;--line:#e3e8e9;--shadow:0 10px 28px #203e5910}
+*{box-sizing:border-box}body{margin:0;background:#f5f7f7;color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
+.sidebar{background:var(--navy);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:22px}.brand{display:flex;align-items:center;gap:11px;padding:0 8px}.logo{width:42px;height:42px;border-radius:14px;background:#dceaf1;color:var(--navy);display:grid;place-items:center;font-size:23px}.brand strong{display:block;font-size:18px;letter-spacing:.04em}.brand small{color:#c7d6df}.nav-label{color:#a9bdc9;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:0 12px;margin:3px 0}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#e5edf1;text-align:left;padding:11px 12px;border-radius:11px;display:flex;gap:12px;align-items:center}.nav button:hover,.nav button.active{background:#ffffff1b;color:white}.nav .ico{width:21px;text-align:center;font-size:17px}.side-note{margin-top:auto;border:1px solid #ffffff30;border-radius:14px;padding:13px;color:#d8e3e9;font-size:12px}
+main{min-width:0;padding:28px clamp(16px,4vw,48px) 48px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:26px}.eyebrow{color:#78909e;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}.page-title{font-size:clamp(25px,3vw,34px);line-height:1.15;margin:5px 0 4px;color:var(--navy)}.sub{color:var(--muted);margin:0}.top-actions{display:flex;gap:8px;align-items:center}.pill{background:var(--blue2);color:var(--navy);border-radius:30px;padding:8px 12px;font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);min-width:0}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.hero{background:linear-gradient(120deg,#e2edf2,#faf7ef);border:1px solid #dce6e9;padding:26px;border-radius:22px;display:flex;justify-content:space-between;gap:20px;align-items:center}.hero h2{font-size:clamp(22px,3vw,30px);margin:4px 0 8px;color:var(--navy)}.hero p{margin:0;color:#5e707b;max-width:550px}.hero-mark{font-size:62px;opacity:.85}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.section-head h2,.card h3{margin:0;color:var(--navy)}.section-head h2{font-size:19px}.muted{color:var(--muted)}.stat{font-size:29px;font-weight:750;color:var(--navy);margin-top:7px}.stat-label{color:var(--muted);font-size:12px}.btn{border:0;border-radius:10px;padding:10px 14px;background:var(--navy);color:#fff;font-weight:650}.btn:hover{filter:brightness(1.1)}.btn.secondary{background:var(--blue2);color:var(--navy)}.btn.ghost{background:#f3f6f7;color:var(--navy)}.btn.danger{background:#f8e9e7;color:#8b3931}.btn.small{padding:7px 10px;font-size:12px}.actions{display:flex;gap:7px;flex-wrap:wrap}.list{display:grid;gap:9px}.item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #edf0f1}.item:last-child{border-bottom:0}.item input[type=checkbox]{margin-top:4px;accent-color:var(--navy);width:17px;height:17px}.item-main{flex:1;min-width:0}.item-title{font-weight:650}.item.done .item-title{text-decoration:line-through;color:#89959b}.meta{font-size:12px;color:var(--muted);margin-top:2px}.tag{display:inline-block;background:#edf3f5;color:#466477;border-radius:20px;padding:4px 8px;font-size:11px;margin:2px}.empty{padding:22px;text-align:center;color:var(--muted);background:#f8faf9;border-radius:13px}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.field{display:grid;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#60717b;font-weight:650}.field input,.field select,.field textarea{width:100%;border:1px solid #dce3e5;border-radius:10px;padding:10px 11px;background:#fff;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:#83abc1;box-shadow:0 0 0 3px #dceaf1}.field textarea{min-height:75px;resize:vertical}.modal-back{position:fixed;inset:0;background:#152b3c77;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-back.show{display:flex}.modal{background:#fff;border-radius:18px;padding:22px;width:min(520px,100%);max-height:90vh;overflow:auto;box-shadow:0 20px 70px #0003}.modal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-top h2{margin:0;color:var(--navy)}.close{border:0;background:#eef2f3;border-radius:9px;padding:7px 10px}.notice{background:#f7f3e9;border:1px solid #eee4cf;padding:12px 14px;border-radius:12px;color:#75664b;font-size:12px}.family{display:flex;gap:12px;align-items:center}.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e4eef2;font-size:21px}.mobile-menu{display:none}.week{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:8px;overflow:auto}.day{background:#f8faf9;border:1px solid var(--line);border-radius:12px;padding:10px;min-height:110px}.day strong{font-size:12px;color:var(--navy)}.day p{font-size:11px;margin:7px 0;color:#63737b}.label-preview{border:1px dashed #9ab5c3;border-radius:12px;padding:16px;background:#fbfaf6;max-width:320px}.label-preview strong{display:block;font-size:18px;color:var(--navy)}.footer-note{margin-top:18px;color:#8a969b;font-size:11px}
+@media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{position:sticky;top:0;z-index:5;padding:12px 14px;gap:10px}.brand{padding:0}.brand small,.side-note,.nav-label{display:none}.nav{display:flex;overflow:auto;gap:4px}.nav button{white-space:nowrap;padding:9px 10px;font-size:12px}.nav .ico{width:auto}.topbar{margin-bottom:18px}.mobile-menu{display:block}.span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}.hero-mark{display:none}}
+@media print{.sidebar,.topbar,.no-print,.footer-note{display:none!important}body{background:white}.app{display:block}main{padding:0}.card{box-shadow:none}.label-preview{border:1px solid #888}}
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar">
- <div class="brand"><div class="logo">⌂</div><div><strong>Family OS</strong><small>La casa, in armonia</small></div></div>
- <div class="nav-label">Il tuo spazio</div><nav id="sideNav"></nav>
- <div class="side-note">✨ Una famiglia organizzata è una famiglia che trova più tempo per stare insieme.</div>
+ <div class="brand"><div class="logo">⌂</div><div><strong>FAMILY OS</strong><small>La famiglia, in armonia</small></div></div>
+ <div><div class="nav-label">Il tuo spazio</div><nav class="nav" id="nav">
+ <button data-page="home" class="active"><span class="ico">⌂</span>Panoramica</button>
+ <button data-page="family"><span class="ico">♡</span>La famiglia</button>
+ <button data-page="calendar"><span class="ico">▦</span>Calendario</button>
+ <button data-page="chores"><span class="ico">✧</span>Casa e faccende</button>
+ <button data-page="school"><span class="ico">▤</span>Scuola</button>
+ <button data-page="menu"><span class="ico">♧</span>Menù</button>
+ <button data-page="shopping"><span class="ico">🛒</span>Lista della spesa</button>
+ <button data-page="recipes"><span class="ico">♨</span>Ricettario</button>
+ <button data-page="pantry"><span class="ico">▣</span>Frigo e congelatore</button>
+ <button data-page="labels"><span class="ico">▧</span>Etichette</button>
+ <button data-page="goals"><span class="ico">☆</span>Obiettivi e premi</button>
+ </nav></div>
+ <div class="side-note">Una casa organizzata non deve essere perfetta: deve funzionare per tutti. 💙</div>
 </aside>
 <main>
- <header class="topbar"><div><div class="eyebrow">Benvenuti a casa</div><h1 id="pageTitle">La nostra famiglia</h1><div class="subtitle" id="pageSubtitle">Tutto quello che conta, in un unico posto.</div></div><div class="date-pill" id="today"></div></header>
+ <header class="topbar"><div><div class="eyebrow">Family operating system</div><h1 class="page-title" id="pageTitle">Benvenuti a casa</h1><p class="sub" id="pageSub">Tutto quello che conta, in un unico posto.</p></div><div class="top-actions"><span class="pill">Demo interattiva</span></div></header>
  <section id="content"></section>
- <footer>FAMILY OS · Organizzazione semplice, vita più serena</footer>
+ <div class="footer-note">FAMILY OS · Organizzazione semplice, vita più serena · I dati demo restano salvati in questo browser.</div>
 </main>
 </div>
-<div class="bottom-nav" id="bottomNav"></div>
+<div class="modal-back" id="modalBack"><div class="modal"><div class="modal-top"><h2 id="modalTitle">Aggiungi</h2><button class="close" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
 <script>
-const modules=[
- {id:'home',name:'Panoramica',icon:'⌂',desc:'La tua casa, a colpo d’occhio'},
- {id:'family',name:'Famiglia',icon:'♡',desc:'Profili e ruoli familiari'},
- {id:'calendar',name:'Calendario',icon:'▦',desc:'Impegni, appuntamenti e attività'},
- {id:'chores',name:'Faccende',icon:'✧',desc:'Compiti di casa per tutti'},
- {id:'school',name:'Scuola',icon:'✎',desc:'Compiti, verifiche e studio'},
- {id:'menu',name:'Menù',icon:'♧',desc:'Pianificazione dei pasti'},
- {id:'recipes',name:'Ricette',icon:'♨',desc:'Ricettario e meal prep'},
- {id:'shopping',name:'Spesa',icon:'🛒',desc:'Lista della spesa condivisa'},
- {id:'stock',name:'Dispensa',icon:'▤',desc:'Frigorifero e congelatore'},
- {id:'labels',name:'Etichette',icon:'▧',desc:'Etichette digitali e stampa'},
- {id:'goals',name:'Obiettivi',icon:'☆',desc:'Punti, traguardi e autonomia'},
- {id:'notes',name:'Appunti',icon:'☷',desc:'Note e promemoria'}
-];
+const STORE='familyos_demo_v1';
 const defaults={
- family:[{name:'Mamma',role:'Genitore'},{name:'Papà',role:'Genitore'},{name:'Figlio',role:'18 anni'},{name:'Figlia',role:'14 anni'},{name:'Piccolo',role:'4 anni'}],
- chores:[{text:'Riordinare gli spazi comuni',who:'Tutti',done:false},{text:'Mettere i vestiti nel cesto',who:'Bambini',done:false},{text:'Preparare la tavola',who:'A turno',done:false}],
- school:[{text:'Controllare il diario e i compiti',subject:'Organizzazione',date:'',done:false}],
- calendar:[],menu:[],recipes:[],shopping:[],stock:[],labels:[],goals:[],notes:[]
+ family:[{name:'Mamma',role:'Genitore',age:'Adulto',avatar:'👩'},{name:'Papà',role:'Genitore',age:'Adulto',avatar:'👨'},{name:'Figlio',role:'Figlio',age:'18 anni',avatar:'🧑'},{name:'Figlia',role:'Figlia',age:'14 anni',avatar:'👧'},{name:'Piccolo',role:'Figlio',age:'4 anni',avatar:'🧒'}],
+ chores:[{title:'Riordinare il soggiorno',who:'Tutti',date:today(),done:false},{title:'Mettere i vestiti nel cesto',who:'Piccolo',date:today(),done:false},{title:'Sistemare la cucina',who:'Mamma',date:today(),done:false}],
+ school:[{title:'Ripassare antologia',subject:'Italiano',due:future(2),who:'Figlia',done:false},{title:'Esercizi di matematica',subject:'Matematica',due:future(4),who:'Figlia',done:false}],
+ calendar:[],menu:[{day:'Lunedì',meal:'Pasta al pomodoro e verdure'},{day:'Martedì',meal:'Pollo al forno con patate'}],
+ shopping:[{name:'Latte',qty:'2 L',done:false},{name:'Pasta',qty:'1 kg',done:false}],recipes:[{name:'Piadine morbide',category:'Rosticceria',notes:'Farina, acqua, olio, sale. Impastare, riposare e cuocere in padella.'}],
+ pantry:[{name:'Ragù fatto in casa',qty:'2 porzioni',place:'Congelatore',date:today(),expiry:future(60)}],
+ goals:[{title:'Preparare lo zaino la sera',points:5,who:'Figlia',done:false},{title:'Riordinare i giochi',points:3,who:'Piccolo',done:false}],labels:[]
 };
-let data={};try{data=JSON.parse(localStorage.getItem('familyos-data')||'{}')}catch(e){data={}}
-for(const k in defaults)if(!Array.isArray(data[k]))data[k]=defaults[k].map(x=>({...x}));
-let active='home';
-function save(){localStorage.setItem('familyos-data',JSON.stringify(data))}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function go(id){active=id;render()}
-function nav(){const html=modules.map(m=>`<button class="nav-btn ${active===m.id?'active':''}" onclick="go('${m.id}')"><span class="nav-icon">${m.icon}</span>${m.name}</button>`).join('');document.getElementById('sideNav').innerHTML=html;document.getElementById('bottomNav').innerHTML=modules.filter(m=>['home','calendar','chores','menu','shopping'].includes(m.id)).map(m=>`<button class="${active===m.id?'active':''}" onclick="go('${m.id}')"><b>${m.icon}</b>${m.name}</button>`).join('')}
-function header(title,sub){document.getElementById('pageTitle').textContent=title;document.getElementById('pageSubtitle').textContent=sub}
-function panel(title,body,action=''){return `<div class="panel"><div class="panel-head"><h2>${title}</h2>${action}</div>${body}</div>`}
-function addForm(placeholder,fn,button='Aggiungi'){return `<form class="form-row" onsubmit="${fn}(event)"><input id="newItem" placeholder="${placeholder}" required><button class="btn" type="submit">＋ ${button}</button></form>`}
-function listItems(arr,kind){if(!arr.length)return '<div class="empty">Non ci sono ancora elementi. Aggiungine uno per iniziare.</div>';return `<div class="list">${arr.map((x,i)=>`<div class="item ${x.done?'done':''}">${'done' in x?`<input type="checkbox" ${x.done?'checked':''} onchange="toggle('${kind}',${i})">`:''}<div class="item-text"><strong>${esc(x.text||x.name||x.title||x.item||'Elemento')}</strong>${x.who?`<div class="muted">Responsabile: ${esc(x.who)}</div>`:''}${x.subject?`<div class="muted">${esc(x.subject)} ${x.date?'· '+esc(x.date):''}</div>`:''}${x.detail?`<div class="muted">${esc(x.detail)}</div>`:''}</div><button class="btn cream small" onclick="removeItem('${kind}',${i})">Elimina</button></div>`).join('')}</div>`}
-function toggle(k,i){data[k][i].done=!data[k][i].done;save();render()}
-function removeItem(k,i){data[k].splice(i,1);save();render()}
-function addSimple(k,e,extra={}){e.preventDefault();const v=document.getElementById('newItem').value.trim();if(!v)return;data[k].unshift({text:v,...extra});save();render()}
-function home(){header('La nostra famiglia','Tutto quello che conta, in un unico posto.');const total=data.chores.length,done=data.chores.filter(x=>x.done).length;return `
- <div class="grid">
- <div class="stat"><div class="stat-icon">♡</div><strong>${data.family.length}</strong><span>Persone in famiglia</span></div>
- <div class="stat"><div class="stat-icon">✓</div><strong>${done}/${total}</strong><span>Faccende completate</span></div>
- <div class="stat"><div class="stat-icon">▤</div><strong>${data.shopping.length}</strong><span>Articoli nella spesa</span></div>
- </div>
- <div style="height:18px"></div>
- ${panel('I tuoi moduli','<div class="module-grid">'+modules.filter(m=>m.id!=='home').map(m=>`<button class="module-card" onclick="go('${m.id}')"><span class="emoji">${m.icon}</span><strong>${m.name}</strong><small>${m.desc}</small></button>`).join('')+'</div>')}
- ${panel('Da fare oggi',listItems(data.chores.slice(0,4),'chores'),'<button class="btn secondary small" onclick="go(&quot;chores&quot;)">Apri faccende</button>')}`}
-function family(){header('La nostra famiglia','Profili, ruoli e collaborazione.');return panel('Componenti della famiglia',`<div class="grid">${data.family.map((p,i)=>`<div class="recipe"><div style="font-size:23px"> ${['♡','♙','⚽','✿','☀'][i%5]}</div><h3>${esc(p.name)}</h3><span class="tag">${esc(p.role)}</span></div>`).join('')}</div><form class="form-row" onsubmit="addFamily(event)"><input id="person" placeholder="Nome" required><select id="role"><option>Genitore</option><option>18 anni</option><option>14 anni</option><option>6–13 anni</option><option>0–6 anni</option><option>Nonno/a</option><option>Babysitter</option></select><button class="btn">＋ Aggiungi</button></form>`)}
-function addFamily(e){e.preventDefault();data.family.push({name:document.getElementById('person').value,role:document.getElementById('role').value});save();render()}
-function generic(k,title,sub,placeholder,extra=''){header(title,sub);return panel(title,extra+addForm(placeholder,`add_${k}`)+listItems(data[k],k))}
-function add_calendar(e){addSimple('calendar',e)}function add_chores(e){addSimple('chores',e,{who:'Da assegnare',done:false})}function add_school(e){addSimple('school',e,{subject:'Da definire',done:false})}function add_shopping(e){addSimple('shopping',e,{done:false})}function add_notes(e){addSimple('notes',e)}
-function calendar(){return generic('calendar','Calendario familiare','Appuntamenti, attività ed eventi da ricordare.','Aggiungi un appuntamento')}
-function chores(){return generic('chores','Faccende domestiche','Piccoli compiti, responsabilità condivise e autonomia.','Aggiungi una faccenda','<p class="muted">Assegna compiti adatti all’età. Per i più piccoli: attività brevi e sempre con un adulto.</p>')}
-function school(){return generic('school','Organizzazione scolastica','Compiti, verifiche e impegni di studio.','Aggiungi un compito o una verifica')}
-function shopping(){return generic('shopping','Lista della spesa','Raccogli qui quello che serve a casa.','Aggiungi un prodotto')}
-function menu(){header('Menù settimanale','Pianifica colazioni, pranzi, merende e cene.');let days=['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'];return panel('Il menù della settimana',`<div class="list">${days.map(d=>`<div class="recipe"><h3>${d}</h3><div class="field"><label>Colazione</label><input placeholder="Cosa mangiamo?" onchange="setMenu('${d}','colazione',this.value)" value="${esc((data.menu.find(x=>x.day===d)||{})['colazione']||'')}"></div><div class="field"><label>Pranzo</label><input placeholder="Pranzo" onchange="setMenu('${d}','pranzo',this.value)" value="${esc((data.menu.find(x=>x.day===d)||{})['pranzo']||'')}"></div><div class="field"><label>Cena</label><input placeholder="Cena" onchange="setMenu('${d}','cena',this.value)" value="${esc((data.menu.find(x=>x.day===d)||{})['cena']||'')}"></div></div>`).join('')}</div><p class="muted">Le modifiche vengono salvate automaticamente su questo dispositivo.</p>`)}
-function setMenu(day,meal,value){let x=data.menu.find(x=>x.day===day);if(!x){x={day};data.menu.push(x)}x[meal]=value;save()}
-function recipes(){header('Ricettario e meal prep','Ricette di famiglia, preparazioni e congelamento.');return panel('Le nostre ricette',`<form class="field" onsubmit="addRecipe(event)"><label>Nome della ricetta</label><input id="rname" placeholder="Es. Pizzette da congelare" required><label>Ingredienti e dosi</label><textarea id="ring" rows="2" placeholder="Ingredienti..."></textarea><label>Procedimento e conservazione</label><textarea id="rsteps" rows="3" placeholder="Procedimento, meal prep, congelamento e scongelamento..."></textarea><button class="btn">＋ Salva ricetta</button></form><div class="two-col">${data.recipes.map((r,i)=>`<div class="recipe"><h3>${esc(r.name)}</h3><p><b>Ingredienti:</b> ${esc(r.ingredients)}</p><p>${esc(r.steps)}</p><button class="btn cream small" onclick="removeItem('recipes',${i})">Elimina</button></div>`).join('')}</div>${data.recipes.length?'':'<div class="empty">Il ricettario è pronto per le tue ricette preferite.</div>'}`)}
-function addRecipe(e){e.preventDefault();data.recipes.unshift({name:rname.value,ingredients:ring.value,steps:rsteps.value});save();render()}
-function stock(){header('Frigorifero e congelatore','Tieni sotto controllo quantità, date e scorte.');return panel('Aggiungi una scorta',`<form class="field" onsubmit="addStock(event)"><label>Alimento o preparazione</label><input id="sname" required placeholder="Es. Lasagne al ragù"><div class="two-col"><div><label>Quantità</label><input id="sqty" placeholder="Es. 2 porzioni"></div><div><label>Conservazione</label><select id="splace"><option>Frigorifero</option><option>Congelatore</option><option>Dispensa</option></select></div></div><div class="two-col"><div><label>Data preparazione/acquisto</label><input id="sdate" type="date"></div><div><label>Da consumare entro</label><input id="sexp" type="date"></div></div><button class="btn">＋ Registra scorta</button></form>${listItems(data.stock,'stock')}`)}
-function addStock(e){e.preventDefault();data.stock.unshift({text:sname.value,detail:`${sqty.value} · ${splace.value} · preparato/acquistato: ${sdate.value||'—'} · termine: ${sexp.value||'—'}`});save();render()}
-function labels(){header('Etichette alimentari','Crea etichette digitali e stampabili per le tue preparazioni.');return panel('Crea una nuova etichetta',`<form class="field" onsubmit="addLabel(event)"><label>Nome alimento o piatto</label><input id="lname" required placeholder="Es. Polpette al sugo"><div class="two-col"><div><label>Data preparazione</label><input id="ldate" type="date"></div><div><label>Da consumare entro</label><input id="lexp" type="date"></div></div><label>Note / quantità</label><input id="lqty" placeholder="Es. 4 porzioni"><button class="btn">＋ Crea etichetta</button></form><div class="grid">${data.labels.map((l,i)=>`<div class="recipe"><div class="eyebrow">FAMILY OS · ETICHETTA</div><h3>${esc(l.name)}</h3><p>Preparato: ${esc(l.date||'—')}<br>Consumo consigliato: ${esc(l.exp||'—')}<br>${esc(l.qty)}</p><button class="btn small" onclick="window.print()">Stampa</button> <button class="btn cream small" onclick="removeItem('labels',${i})">Elimina</button></div>`).join('')}</div>${data.labels.length?'':'<div class="empty">Le etichette create appariranno qui.</div>'}`)}
-function addLabel(e){e.preventDefault();data.labels.unshift({name:lname.value,date:ldate.value,exp:lexp.value,qty:lqty.value});save();render()}
-function goals(){header('Obiettivi e autonomia','Piccoli passi, riconoscimenti e traguardi familiari.');return panel('I nostri obiettivi',`<form class="form-row" onsubmit="addGoal(event)"><input id="gname" placeholder="Es. Riordinare la cameretta" required><button class="btn">＋ Aggiungi</button></form>${listItems(data.goals,'goals')}<p class="muted">Spunta un obiettivo quando è raggiunto. Potrete aggiungere punti e premi concordati in famiglia.</p>`)}
-function addGoal(e){e.preventDefault();data.goals.unshift({text:gname.value,done:false});save();render()}
-function notes(){return generic('notes','Appunti e promemoria','Idee, informazioni e cose da non dimenticare.','Scrivi un appunto')}
-function render(){nav();const views={home,family,calendar,chores,school,menu,recipes,shopping,stock,labels,goals,notes};document.getElementById('content').innerHTML=views[active]();document.getElementById('today').textContent=new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});}
-render();
+function today(){return new Date().toISOString().slice(0,10)}function future(n){let d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+let data;try{data=JSON.parse(localStorage.getItem(STORE))||structuredClone(defaults)}catch(e){data=JSON.parse(JSON.stringify(defaults))}
+function save(){localStorage.setItem(STORE,JSON.stringify(data));render()}
+let page='home';
+const config={
+home:['Benvenuti a casa','Tutto quello che conta, in un unico posto.'],
+family:['La nostra famiglia','Le persone, i ruoli e le piccole responsabilità di tutti.'],
+calendar:['Calendario familiare','Appuntamenti, impegni e giornate da organizzare.'],
+chores:['Casa e faccende','Piccoli compiti condivisi, con responsabilità adatte all’età.'],
+school:['Compiti scolastici','Materie, verifiche e scadenze sempre sotto controllo.'],
+menu:['Menù settimanale','Pianifica i pasti della famiglia, un giorno alla volta.'],
+shopping:['Lista della spesa','Una lista condivisa da aggiornare mentre fai la spesa.'],
+recipes:['Ricettario','Le ricette di famiglia, comprese le preparazioni da congelare.'],
+pantry:['Frigorifero e congelatore','Tieni traccia di porzioni, quantità e date.'],
+labels:['Etichette','Crea etichette per riconoscere facilmente le preparazioni.'],
+goals:['Obiettivi e premi','Valorizza l’autonomia e i piccoli traguardi.']
+};
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function empty(msg){return `<div class="empty">${msg}</div>`}
+function btn(label,fn,cls='secondary'){return `<button class="btn ${cls}" onclick="${fn}">${label}</button>`}
+function addBtn(label,kind){return btn('+ '+label,`openAdd('${kind}')`,'')}
+function card(title,body,span='span-6',action=''){return `<div class="card ${span}"><div class="section-head"><h2>${title}</h2>${action}</div>${body}</div>`}
+function render(){
+ document.getElementById('pageTitle').textContent=config[page][0];document.getElementById('pageSub').textContent=config[page][1];
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ let c='';
+ if(page==='home'){
+ const pending=data.chores.filter(x=>!x.done).length+data.school.filter(x=>!x.done).length;
+ c=`<div class="hero"><div><div class="eyebrow">FAMILY OS · ORGANIZZAZIONE SEMPLICE</div><h2>La nostra famiglia, in equilibrio.</h2><p>Un unico spazio per organizzare casa, scuola, pasti e impegni. Ogni piccolo passo conta.</p><div class="actions" style="margin-top:17px">${btn('Vai alle faccende',`go('chores')`)}${btn('Organizza il menù',`go('menu')`,'secondary')}</div></div><div class="hero-mark">⌂</div></div>
+ <div class="grid" style="margin-top:16px">${card('Da fare',`<div class="stat">${pending}</div><div class="stat-label">attività ancora da completare</div>`,'span-4')}${card('Persone in famiglia',`<div class="stat">${data.family.length}</div><div class="stat-label">profili familiari</div>`,'span-4')}${card('Elementi nella spesa',`<div class="stat">${data.shopping.filter(x=>!x.done).length}</div><div class="stat-label">prodotti ancora da acquistare</div>`,'span-4')}
+ ${card('Le prossime attività',taskList(data.chores.slice(0,4),'chores'),'span-7',btn('Tutte le faccende',`go('chores')`,'ghost'))}
+ ${card('Accesso rapido',`<div class="grid"><div class="span-6">${quick('📅','Calendario','calendar')}</div><div class="span-6">${quick('📚','Scuola','school')}</div><div class="span-6">${quick('🍽️','Menù','menu')}</div><div class="span-6">${quick('🧊','Scorte','pantry')}</div></div>`,'span-5')}
+ ${card('Il menù in programma',data.menu.slice(0,3).map(x=>`<div class="item"><div class="item-main"><div class="item-title">${esc(x.day)}</div><div class="meta">${esc(x.meal)}</div></div></div>`).join('')||empty('Aggiungi i pasti della settimana.'),'span-6')}
+ ${card('La famiglia',data.family.map(x=>`<div class="item"><div class="avatar">${esc(x.avatar)}</div><div class="item-main"><div class="item-title">${esc(x.name)}</div><div class="meta">${esc(x.role)} · ${esc(x.age)}</div></div></div>`).join(''),'span-6')}</div>`;
+ } else if(page==='family'){
+ c=`<div class="grid">${card('Componenti della famiglia',data.family.map((x,i)=>`<div class="item"><div class="avatar">${esc(x.avatar)}</div><div class="item-main"><div class="item-title">${esc(x.name)}</div><div class="meta">${esc(x.role)} · ${esc(x.age)}</div></div>${btn('Modifica',`editItem('family',${i})`,'ghost small')}</div>`).join('')||empty('Aggiungi il primo profilo.'),'span-12',addBtn('Aggiungi persona','family'))}<div class="notice span-12">Nella demo puoi creare e modificare i profili. La gestione reale di account, inviti e permessi protetti sarà collegata in una fase successiva.</div></div>`;
+ }else if(page==='chores'||page==='school'||page==='goals'){
+ let key=page,arr=data[key];let title=page==='chores'?'Attività di casa':page==='school'?'Compiti e verifiche':'Traguardi familiari';
+ c=`<div class="grid">${card(title,taskList(arr,key),'span-12',addBtn(page==='chores'?'Aggiungi faccenda':page==='school'?'Aggiungi compito':'Aggiungi obiettivo',key))}<div class="notice span-12">${page==='chores'?'Suggerimento: assegna ai più piccoli attività brevi e sicure, sempre con la presenza di un adulto.':page==='school'?'Inserisci materia e data di scadenza per non perdere di vista verifiche e compiti.':'I punti sono un incoraggiamento: scegli premi semplici e condivisi.'}</div></div>`;
+ }else if(page==='calendar'){
+ c=`<div class="grid">${card('Impegni e appuntamenti',data.calendar.map((x,i)=>`<div class="item"><div class="item-main"><div class="item-title">${esc(x.title)}</div><div class="meta">${esc(x.date)} · ${esc(x.who||'Famiglia')} ${x.time?'· '+esc(x.time):''}</div></div>${btn('Elimina',`removeItem('calendar',${i})`,'danger small')}</div>`).join('')||empty('Non ci sono ancora appuntamenti. Aggiungi il primo impegno.'),'span-12',addBtn('Nuovo appuntamento','calendar'))}</div>`;
+ }else if(page==='menu'){
+ c=`<div class="grid">${card('Pasti della settimana',`<div class="week">${['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'].map(d=>`<div class="day"><strong>${d}</strong>${data.menu.filter(x=>x.day===d).map(x=>`<p>${esc(x.meal)} <button class="close no-print" onclick="removeMenu('${d}','${esc(x.meal)}')">×</button></p>`).join('')}</div>`).join('')}</div>`,'span-12',addBtn('Aggiungi pasto','menu'))}${card('Consiglio',`<p class="muted">Pianifica prima i piatti principali, poi riutilizza gli ingredienti per ridurre sprechi e spesa.</p>`,'span-12')}</div>`;
+ }else if(page==='shopping'){
+ c=`<div class="grid">${card('La lista della spesa',`<div class="list">${data.shopping.map((x,i)=>`<div class="item ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} onchange="toggle('shopping',${i})"><div class="item-main"><div class="item-title">${esc(x.name)}</div><div class="meta">${esc(x.qty||'')}</div></div>${btn('×',`removeItem('shopping',${i})`,'danger small')}</div>`).join('')||empty('La lista è vuota.')}</div><div class="actions" style="margin-top:14px">${btn('Azzera spunte',`clearChecks()`,'ghost')}${btn('Stampa lista',`window.print()`,'secondary')}</div>`,'span-12',addBtn('Aggiungi prodotto','shopping'))}</div>`;
+ }else if(page==='recipes'){
+ c=`<div class="grid">${card('Ricette di famiglia',data.recipes.map((x,i)=>`<div class="item"><div class="item-main"><div class="item-title">${esc(x.name)}</div><div class="meta">${esc(x.category||'Ricetta')}</div><p class="muted">${esc(x.notes||'')}</p></div>${btn('Elimina',`removeItem('recipes',${i})`,'danger small')}</div>`).join('')||empty('Aggiungi la tua prima ricetta.'),'span-12',addBtn('Nuova ricetta','recipes'))}<div class="notice span-12">Puoi raccogliere ricette, dosi, procedimento, preparazione anticipata, congelamento e scongelamento nelle note.</div></div>`;
+ }else if(page==='pantry'){
+ c=`<div class="grid">${card('Scorte di casa',data.pantry.map((x,i)=>`<div class="item"><div class="item-main"><div class="item-title">${esc(x.name)}</div><div class="meta">${esc(x.qty)} · ${esc(x.place)} · preparato ${esc(x.date||'—')} · termine ${esc(x.expiry||'—')}</div></div>${btn('Elimina',`removeItem('pantry',${i})`,'danger small')}</div>`).join('')||empty('Nessuna scorta registrata.'),'span-12',addBtn('Registra alimento','pantry'))}<div class="notice span-12">Registra quantità, posizione e date: controlla sempre le indicazioni di conservazione sicura per ogni alimento.</div></div>`;
+ }else if(page==='labels'){
+ c=`<div class="grid">${card('Crea un’etichetta',`<form class="form" onsubmit="makeLabel(event)"><div class="field full"><label>Nome alimento o preparazione</label><input id="labName" required placeholder="Es. Ragù fatto in casa"></div><div class="field"><label>Data preparazione</label><input id="labDate" type="date" value="${today()}"></div><div class="field"><label>Da consumare entro / controllo</label><input id="labExpiry" type="date"></div><div class="field full"><label>Quantità e note</label><input id="labQty" placeholder="Es. 2 porzioni · congelatore"></div><div class="field full"><button class="btn">Crea etichetta</button></div></form>`,'span-7')}${card('Anteprima etichetta',`<div id="labelPreview" class="label-preview"><div class="eyebrow">FAMILY OS · PREPARAZIONE</div><strong>La tua etichetta</strong><p class="muted">Compila i campi per creare un’etichetta.</p></div><div class="actions no-print" style="margin-top:12px">${btn('Stampa etichetta',`window.print()`,'secondary')}</div>`,'span-5')}${card('Etichette create',data.labels.map((x,i)=>`<div class="item"><div class="item-main"><div class="item-title">${esc(x.name)}</div><div class="meta">${esc(x.date)} · ${esc(x.qty)}</div></div>${btn('Elimina',`removeItem('labels',${i})`,'danger small')}</div>`).join('')||empty('Le etichette create appariranno qui.'),'span-12')}</div>`;
+ }
+ document.getElementById('content').innerHTML=c;
+}
+function quick(icon,label,p){return `<button onclick="go('${p}')" style="width:100%;border:1px sol
